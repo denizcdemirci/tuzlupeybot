@@ -1,7 +1,7 @@
 // const fs = require('fs');
 const { Client, MessageAttachment } = require('discord.js');
 const client = new Client();
-const config = require('./assets/config.json');
+const config = require('./config.json');
 
 client.on('guildMemberAdd', member => {
   const channel = member.guild.channels.cache.find(ch => ch.name === config.mainChannel);
@@ -26,6 +26,14 @@ client.on('message', async message => {
     })
   }
 
+  if (message.content.toLowerCase() === 'sela') {
+    return message.reply('yallah arabistana').then(botMessage => {
+      botMessage.delete({
+        timeout: config.replyTimeout
+      })
+    })
+  }
+
   if (message.content.toLowerCase() === 'dikkat') {
     return message.reply('mardatone tefankardo xeri hirrime').then(botMessage => {
       botMessage.delete({
@@ -40,15 +48,6 @@ client.on('message', async message => {
 
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
-
-  if (message.content.toLowerCase() === 'sela') {
-    return message.reply('yallah arabistana').then(botMessage => {
-      botMessage.delete({
-        timeout: config.replyTimeout
-      })
-    })
-  }
-
 
   if (command === 'kurallar') {
     const attachment = new MessageAttachment('https://cdn.discordapp.com/attachments/107541159357739008/764980773362991104/unknown.png');
