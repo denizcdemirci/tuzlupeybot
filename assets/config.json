@@ -1,0 +1,17 @@
+{
+  "prefix": "-",
+  "mainChannel": "sohbet",
+  "islamicGreetings": [
+    "selamın aleyküm",
+    "sa",
+    "s.a.",
+    "s.a",
+    "sela"
+  ],
+  "rizaNicknames": [
+    "riza",
+    "rıza",
+    "r1z4"
+  ],
+  "replyTimeout": 5000
+}
