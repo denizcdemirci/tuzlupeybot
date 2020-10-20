@@ -1,5 +1,6 @@
-const { Client, MessageAttachment } = require('discord.js');
+const {Client, MessageAttachment} = require('discord.js');
 const client = new Client();
+const fetch = require('node-fetch');
 const config = require('./config.json');
 
 client.on('guildMemberAdd', member => {
@@ -54,19 +55,12 @@ client.on('message', async message => {
   }
 
   if (command === 'maymun' || command === 'meymun') {
-
-    let settings = { method: "Get" };
-
-    //TODO API KEY'i env falan almak lazım.
-    var response = await fetch("https://api.giphy.com/v1/gifs/random?api_key=nLzgY14O2CSGj4rmhNNgXQAOxMHt30Hb&tag=monkey", settings)
-    .then(res => res.json())
-    .then((json) => {
-        return json
+    fetch(`https://api.giphy.com/v1/gifs/random?api_key=${process.env.GIPHY_TOKEN}&tag=monkey`)
+      .then((data) => {
+        return data.json();
+      }).then((response) => {
+      return message.channel.send(response.data.images.downsized_large.url);
     });
-
-    var randGif = JSON.parse(response["data"]["images"]["downsized_large"]);
-    const attachment = new MessageAttachment(randGif);
-    return message.channel.send(attachment);
   }
 
   if (command === 'yaz') {
