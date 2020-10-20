@@ -4,9 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+<<<<<<< HEAD
     "@discordjs/opus": "^0.3.2",
     "discord.js": "^12.2.0",
     "ffmpeg-static": "^4.2.7",
     "node-fetch": "^2.6.1"
+=======
+    "discord.js": "^12.4.0"
+>>>>>>> 8dc4b9ee011ab1cd43bc2b366c0591ab57268a60
   }
 }
