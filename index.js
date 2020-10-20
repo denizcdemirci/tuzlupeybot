@@ -59,7 +59,7 @@ client.on('message', async message => {
       .then((data) => {
         return data.json();
       }).then((response) => {
-      return message.channel.send(response.data.images.downsized_large.url);
+      return message.channel.send(response.data.images.original.url);
     });
   }
 
