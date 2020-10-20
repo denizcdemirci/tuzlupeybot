@@ -55,6 +55,24 @@ client.on('message', async message => {
     return message.channel.send(attachment);
   }
 
+  if (command === 'maymun' || command === 'meymun') {
+
+    let settings = { method: "Get" };
+
+    //TODO API KEY'i env falan almak lazım.
+    var response = await fetch("https://api.giphy.com/v1/gifs/random?api_key=nLzgY14O2CSGj4rmhNNgXQAOxMHt30Hb&tag=monkey", settings)
+    .then(res => res.json())
+    .then((json) => {
+        return json
+    });
+
+
+
+    var randGif = JSON.parse(response["images"]["downsized_large"]);
+    const attachment = new MessageAttachment(randGif);
+    return message.channel.send(attachment);
+  }
+
   if (command === 'yaz') {
     await message.delete();
     return message.channel.send(args.join(' '));
