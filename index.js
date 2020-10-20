@@ -4,13 +4,13 @@ const fetch = require('node-fetch');
 const config = require('./config.json');
 
 client.on('guildMemberAdd', member => {
-  const channel = member.guild.channels.cache.find(ch => ch.name === config.mainChannel);
+  const channel = member.guild.channels.cache.find(channel => channel.id === config.mainChannel);
   if (!channel) return;
   channel.send(`**Tuzlu Peynir**'e hoş geldin ${member}, umarız keyifli vakit geçirirsin 🤔`);
 });
 
 client.on('guildMemberRemove', member => {
-  const channel = member.guild.channels.cache.find(ch => ch.name === config.mainChannel);
+  const channel = member.guild.channels.cache.find(channel => channel.id === config.mainChannel);
   if (!channel) return;
   channel.send(`${member} **Tuzlu Peynir**'den ayrıldı 🤔`);
 });
@@ -27,11 +27,7 @@ client.on('message', async message => {
   }
 
   if (message.content.toLowerCase() === 'sela') {
-    return message.reply('yallah arabistana').then(botMessage => {
-      botMessage.delete({
-        timeout: config.replyTimeout
-      })
-    })
+    return message.reply('yallah arabistana');
   }
 
   if (message.content.toLowerCase() === 'dikkat') {
@@ -55,12 +51,22 @@ client.on('message', async message => {
   }
 
   if (command === 'maymun' || command === 'meymun') {
-    fetch(`https://api.giphy.com/v1/gifs/random?api_key=${process.env.GIPHY_TOKEN}&tag=monkey`)
-      .then((data) => {
-        return data.json();
-      }).then((response) => {
-      return message.channel.send(response.data.images.original.url);
-    });
+    if (message.channel.id === config.monkeyChannel) {
+      fetch(`https://api.giphy.com/v1/gifs/random?api_key=${process.env.GIPHY_TOKEN}&tag=monkey`)
+        .then((data) => {
+          return data.json();
+        }).then(async (response) => {
+        const monkeys = ['🐒', '🐵', '🙈', '🙉', '🙊', '🍌'];
+        await message.react(monkeys[Math.floor(Math.random() * monkeys.length)]);
+        return message.channel.send(response.data.images.original.url);
+      });
+    } else {
+      return message.reply(`maymun paylaşımlarını <#${config.monkeyChannel}> kanalında yapabilirsin ❤️`).then(botMessage => {
+        botMessage.delete({
+          timeout: config.replyTimeout
+        })
+      })
+    }
   }
 
   if (command === 'yaz') {
@@ -86,6 +92,11 @@ client.on('message', async message => {
     });
     return message.react('547151525932433408');
   }
+});
+
+client.on('voiceStateUpdate', (oldState, newState) => {
+  if (!newState.channel) return;
+  return client.user.setActivity(newState.channel.name.substr(newState.channel.name.indexOf(' ') + 1));
 });
 
 client.login(process.env.DC_TOKEN);
