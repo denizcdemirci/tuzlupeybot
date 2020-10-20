@@ -1,4 +1,3 @@
-// const fs = require('fs');
 const { Client, MessageAttachment } = require('discord.js');
 const client = new Client();
 const config = require('./config.json');
