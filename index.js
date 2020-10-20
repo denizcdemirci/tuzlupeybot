@@ -66,9 +66,7 @@ client.on('message', async message => {
         return json
     });
 
-
-
-    var randGif = JSON.parse(response["images"]["downsized_large"]);
+    var randGif = JSON.parse(response["data"]["images"]["downsized_large"]);
     const attachment = new MessageAttachment(randGif);
     return message.channel.send(attachment);
   }
