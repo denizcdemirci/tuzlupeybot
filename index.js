@@ -41,36 +41,14 @@ client.on('message', async message => {
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
 
-  /* if (command === 'sela' || message.content.startsWith('sela')) {
-    if (message.member.voice.channel) {
-      const connection = await message.member.voice.channel.join();
-      const dispatcher = connection.play(fs.createReadStream('./assets/sela.mp3'));
-      dispatcher.on('start', () => {
-        let member = message.mentions.members.first();
-        if (member) {
-          message.channel.send(`🕌 ${member.user} için sela okundu`);
-          return message.react('🇫');
-        } else {
-          message.channel.send(`🕌 ${message.author} sela okuttu`);
-          return message.react('🇫');
-        }
-      });
-      dispatcher.on('finish', () => {
-        return connection.disconnect();
-      });
-    } else {
-      return message.reply('önce bi ses kanalına gir amk').then(botMessage => {
-        botMessage.delete({
-          timeout: config.replyTimeout
-        })
+  if (message.content.toLowerCase() === 'sela') {
+    return message.reply('yallah arabistana').then(botMessage => {
+      botMessage.delete({
+        timeout: config.replyTimeout
       })
-    }
+    })
   }
 
-  if ((command === 'kes' || message.content === 'kes') && message.member.voice.channel) {
-    await message.member.voice.channel.leave();
-    return message.react('🙁');
-  } */
 
   if (command === 'kurallar') {
     const attachment = new MessageAttachment('https://cdn.discordapp.com/attachments/107541159357739008/764980773362991104/unknown.png');
