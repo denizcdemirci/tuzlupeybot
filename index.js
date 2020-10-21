@@ -3,19 +3,19 @@ const client = new Client();
 const fetch = require('node-fetch');
 const config = require('./config.json');
 
-client.on('guildMemberAdd', member => {
+client.on('guildMemberAdd', (member) => {
   const channel = member.guild.channels.cache.find(channel => channel.id === config.mainChannel);
   if (!channel) return;
   channel.send(`**Tuzlu Peynir**'e hoş geldin ${member}, umarız keyifli vakit geçirirsin 🤔`);
 });
 
-client.on('guildMemberRemove', member => {
+client.on('guildMemberRemove', (member) => {
   const channel = member.guild.channels.cache.find(channel => channel.id === config.mainChannel);
   if (!channel) return;
   channel.send(`${member} **Tuzlu Peynir**'den ayrıldı 🤔`);
 });
 
-client.on('message', async message => {
+client.on('message', async (message) => {
   if (message.author.bot) return;
 
   if (config.islamicGreetings.some((text) => text === message.content.toLowerCase())) {
@@ -36,6 +36,10 @@ client.on('message', async message => {
         timeout: config.replyTimeout
       })
     })
+  }
+
+  if (message.content.toLowerCase() === 'among us gelecek var mı?') {
+    return message.reply('herkes senin gibi işsiz orospu çocugu mu aq');
   }
 
   if (message.content.split(/ +/g).some((text) => config.rizaNicknames.some((nickname) => text === nickname))) {
@@ -61,11 +65,7 @@ client.on('message', async message => {
         return message.channel.send(response.data.images.original.url);
       });
     } else {
-      return message.reply(`maymun paylaşımlarını <#${config.monkeyChannel}> kanalında yapabilirsin ❤️`).then(botMessage => {
-        botMessage.delete({
-          timeout: config.replyTimeout
-        })
-      })
+      return message.reply(`maymun paylaşımlarını <#${config.monkeyChannel}> kanalında yapabilirsin ❤️`);
     }
   }
 
