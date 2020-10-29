@@ -1,11 +1,7 @@
 const {Client, MessageAttachment} = require('discord.js');
 const client = new Client();
 const fetch = require('node-fetch');
-const editJsonFile = require('edit-json-file');
-file = editJsonFile('./config.json', {
-  autosave: true
-});
-const config = file.toObject();
+const config = require('./config.json');
 
 client.on('guildMemberAdd', (member) => {
   const channel = member.guild.channels.cache.find(channel => channel.id === config.mainChannel);
