@@ -42,12 +42,8 @@ client.on('message', async (message) => {
     });
   }
 
-  if (message.content.toLowerCase() === 'bugün kandil mi') {
-    if (config.islamicHoliday) {
-      return message.reply('evet bugün kandil 🕌');
-    } else {
-      return message.reply('hayır bugün kandil değil 🕌');
-    }
+  if (message.content.toLowerCase() === 'among us gelecek var mı?') {
+    return message.reply('herkes senin gibi işsiz orospu çocugu mu aq');
   }
 
   if (message.content.split(/ +/g).some((text) => config.rizaNicknames.some((nickname) => text === nickname))) {
@@ -98,17 +94,6 @@ client.on('message', async (message) => {
       type: 'LISTENING'
     });
     return message.react('547151525932433408');
-  }
-
-  if (command === 'ayarlar') {
-    await message.delete();
-    if (args[0] === 'kandil') {
-      if (args[1] === 'evet') {
-        return file.set('islamicHoliday', true);
-      } else if (args[1] === 'hayır') {
-        return file.set('islamicHoliday', false);
-      }
-    }
   }
 });
 
