@@ -1,18 +1,22 @@
 const {Client, MessageAttachment} = require('discord.js');
 const client = new Client();
 const fetch = require('node-fetch');
-const config = require('./config.json');
+const editJsonFile = require('edit-json-file');
+file = editJsonFile('./config.json', {
+  autosave: true
+});
+const config = file.toObject();
 
 client.on('guildMemberAdd', (member) => {
   const channel = member.guild.channels.cache.find(channel => channel.id === config.mainChannel);
   if (!channel) return;
-  channel.send(`**Tuzlu Peynir**'e hoş geldin ${member}, umarız keyifli vakit geçirirsin 🤔`);
+  return channel.send(`**Tuzlu Peynir**'e hoş geldin ${member}, umarız keyifli vakit geçirirsin 🤔`);
 });
 
 client.on('guildMemberRemove', (member) => {
   const channel = member.guild.channels.cache.find(channel => channel.id === config.mainChannel);
   if (!channel) return;
-  channel.send(`${member} **Tuzlu Peynir**'den ayrıldı 🤔`);
+  return channel.send(`${member} **Tuzlu Peynir**'den ayrıldı 🤔`);
 });
 
 client.on('message', async (message) => {
@@ -23,7 +27,7 @@ client.on('message', async (message) => {
       botMessage.delete({
         timeout: config.replyTimeout
       })
-    })
+    });
   }
 
   if (message.content.toLowerCase() === 'sela') {
@@ -35,11 +39,15 @@ client.on('message', async (message) => {
       botMessage.delete({
         timeout: config.replyTimeout
       })
-    })
+    });
   }
 
-  if (message.content.toLowerCase() === 'among us gelecek var mı?') {
-    return message.reply('herkes senin gibi işsiz orospu çocugu mu aq');
+  if (message.content.toLowerCase() === 'bugün kandil mi') {
+    if (config.islamicHoliday) {
+      return message.reply('evet bugün kandil 🕌');
+    } else {
+      return message.reply('hayır bugün kandil değil 🕌');
+    }
   }
 
   if (message.content.split(/ +/g).some((text) => config.rizaNicknames.some((nickname) => text === nickname))) {
@@ -56,16 +64,15 @@ client.on('message', async (message) => {
 
   if (command === 'maymun' || command === 'meymun') {
     if (message.channel.id === config.monkeyChannel) {
-      fetch(`https://api.giphy.com/v1/gifs/random?api_key=${process.env.GIPHY_TOKEN}&tag=monkey`)
-        .then((data) => {
-          return data.json();
-        }).then(async (response) => {
+      fetch(`https://api.giphy.com/v1/gifs/random?api_key=${process.env.GIPHY_TOKEN}&tag=monkey`).then((data) => {
+        return data.json();
+      }).then(async (response) => {
         const monkeys = ['🐒', '🐵', '🙈', '🙉', '🙊', '🍌'];
         await message.react(monkeys[Math.floor(Math.random() * monkeys.length)]);
         return message.channel.send(response.data.images.original.url);
       });
     } else {
-      return message.reply(`maymun paylaşımlarını <#${config.monkeyChannel}> kanalında yapabilirsin ❤️`);
+      return message.reply(`${command} paylaşımlarını <#${config.monkeyChannel}> kanalında yapabilirsin ❤️`);
     }
   }
 
@@ -91,6 +98,17 @@ client.on('message', async (message) => {
       type: 'LISTENING'
     });
     return message.react('547151525932433408');
+  }
+
+  if (command === 'ayarlar') {
+    await message.delete();
+    if (args[0] === 'kandil') {
+      if (args[1] === 'evet') {
+        return file.set('islamicHoliday', true);
+      } else if (args[1] === 'hayır') {
+        return file.set('islamicHoliday', false);
+      }
+    }
   }
 });
 
