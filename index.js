@@ -72,7 +72,8 @@ client.on('message', async (message) => {
     if (message.channel.id === config.wolfChannel) {
       fetch(`https://api.giphy.com/v1/gifs/random?api_key=${process.env.GIPHY_TOKEN}&tag=wolf`).then((data) => {
         return data.json();
-      }).then((response) => {
+      }).then(async (response) => {
+        await message.react('4️⃣').then(() => message.react('0️⃣'));
         return message.channel.send(response.data.images.original.url);
       });
     } else {
