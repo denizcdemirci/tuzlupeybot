@@ -109,8 +109,18 @@ client.on('message', async (message) => {
 client.on('voiceStateUpdate', (oldState, newState) => {
   if (!newState.channel) return;
 
-  if (newState.id === '102835660141916160' && newState.channelID === '516335575825907712') {
-    client.users.cache.get('102834355553972224').send(`Imaate seni <#516335575825907712> kanalında bekliyor.️`);
+  if (newState.channelID === config.dotaChannel) {
+    let inviteTo = null;
+
+    if (newState.id === '102834355553972224') {
+      inviteTo = '138261523339411456';
+    } else if (newState.id === '138261523339411456') {
+      inviteTo = '102834355553972224';
+    }
+
+    if (inviteTo) {
+      client.users.cache.get(inviteTo).send(`${newState.guild.members.cache.get(newState.id).user.username} seni ${newState.channel.name} kanalında bekliyor 🤔`);
+    }
   }
 
   return client.user.setActivity(newState.channel.name.substr(newState.channel.name.indexOf(' ') + 1));
