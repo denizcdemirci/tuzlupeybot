@@ -68,19 +68,18 @@ client.on('message', async (message) => {
     }
   }
 
-  if (command === 'kurt' || command === 'kürt') {
-    if (message.channel.id === config.kurtChannel) {
-      fetch(https://api.giphy.com/v1/gifs/random?api_key=${process.env.GIPHY_TOKEN}&tag=wolf).then((data) => {
+  if (command === 'kurt') {
+    if (message.channel.id === config.wolfChannel) {
+      fetch(`https://api.giphy.com/v1/gifs/random?api_key=${process.env.GIPHY_TOKEN}&tag=wolf`).then((data) => {
         return data.json();
-      }).then(async (response) => {
-        const wolves = [':wolf: '];
-        await message.react(wolves[Math.floor(Math.random() * wolves.length)]);
+      }).then((response) => {
         return message.channel.send(response.data.images.original.url);
       });
     } else {
-      return message.reply(${command} paylaşımlarını <#${config.kurtChannel}> kanalında yapabilirsin ❤️);
+      return message.reply(`${command} paylaşımlarını <#${config.wolfChannel}> kanalında yapabilirsin ❤️`);
     }
   }
+
   if (command === 'yaz') {
     await message.delete();
     return message.channel.send(args.join(' '));
