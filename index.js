@@ -95,6 +95,11 @@ client.on('message', async (message) => {
 
 client.on('voiceStateUpdate', (oldState, newState) => {
   if (!newState.channel) return;
+
+  if (newState.id === '102835660141916160' && newState.channelID === '516335575825907712') {
+    client.users.cache.get('102834355553972224').send(`Imaate seni <#516335575825907712> kanalında bekliyor.️`);
+  }
+
   return client.user.setActivity(newState.channel.name.substr(newState.channel.name.indexOf(' ') + 1));
 });
 
