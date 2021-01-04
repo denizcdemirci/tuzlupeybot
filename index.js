@@ -26,22 +26,6 @@ client.on('message', async (message) => {
     });
   }
 
-  if (message.content.toLowerCase() === 'sela') {
-    return message.reply('yallah arabistana');
-  }
-
-  if (message.content.toLowerCase() === 'dikkat') {
-    return message.reply('mardatone tefankardo xeri hirrime').then(botMessage => {
-      botMessage.delete({
-        timeout: config.replyTimeout
-      })
-    });
-  }
-
-  if (message.content.toLowerCase() === 'among us gelecek var mı?') {
-    return message.reply('herkes senin gibi işsiz orospu çocugu mu aq');
-  }
-
   if (message.content.split(/ +/g).some((text) => config.rizaNicknames.some((nickname) => text === nickname))) {
     return message.react('743900789717598308');
   }
@@ -67,47 +51,30 @@ client.on('message', async (message) => {
       return message.reply(`${command} paylaşımlarını <#${config.monkeyChannel}> kanalında yapabilirsin ❤️`);
     }
   }
+});
 
-  if (command === 'kurt') {
-    if (message.channel.id === config.wolfChannel) {
-      fetch(`https://api.giphy.com/v1/gifs/random?api_key=${process.env.GIPHY_TOKEN}&tag=wolf`).then((data) => {
-        return data.json();
-      }).then(async (response) => {
-        await message.react('4️⃣').then(() => message.react('0️⃣'));
-        return message.channel.send(response.data.images.original.url);
-      });
-    } else {
-      return message.reply(`${command} paylaşımlarını <#${config.wolfChannel}> kanalında yapabilirsin ❤️`);
+client.on('ready', () => {
+  client.ws.on('INTERACTION_CREATE', async (interaction) => {
+    const command = interaction.data.name.toLowerCase();
+    const args = interaction.data.options;
+
+    if (command === 'yaz') {
+      return client.channels.cache.find(channel => channel.id === interaction.channel_id).send(args.find((command) => command.name === 'mesaj').value)
     }
-  }
 
-  if (command === 'yaz') {
-    await message.delete();
-    return message.channel.send(args.join(' '));
-  }
-
-  if (command === 'oyna') {
-    await client.user.setActivity(args.join(' '));
-    return message.react('393105743403941890');
-  }
-
-  if (command === 'izle') {
-    await client.user.setActivity(args.join(' '), {
-      type: 'WATCHING'
-    });
-    return message.react('393107856142106635');
-  }
-
-  if (command === 'dinle') {
-    await client.user.setActivity(args.join(' '), {
-      type: 'LISTENING'
-    });
-    return message.react('547151525932433408');
-  }
+    if (command === 'yap') {
+      return await client.user.setActivity(args.find((command) => command.name === 'açıklama').value, {
+        type: args.find((command) => command.name === 'aktivite').value
+      });
+    }
+  });
 });
 
 client.on('voiceStateUpdate', (oldState, newState) => {
   if (!newState.channel) return;
+
+  const otherVoiceChannels = ['107541160855105536', '587682706868011029', '152775281055236097', '789546252101484544'];
+  if (otherVoiceChannels.some((channel) => channel === newState.channelID)) return;
 
   if (newState.channelID === config.dotaChannel) {
     let inviteTo = null;
