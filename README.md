@@ -1,8 +1,8 @@
 # Tuzlupeybot
 
-[Tuzlu Peynir](https://discord.gg/0bF69kqCWd4z5sEc) Discord kanalının en yetkili botudur.
+Tuzlupeybot, [Tuzlu Peynir](https://discord.gg/0bF69kqCWd4z5sEc) Discord kanalının en yetkili botudur.
 
-Tüm Tuzlu Peynir halkı bota istediği özelliği ekleyebilir.
+Tüm Tuzlu Peynir üyeleri botu istediği şekilde geliştirebilir.
 
 ### Sistem Gereksinimleri
 
@@ -18,8 +18,8 @@ $ npm install
 
 ### Geliştirme
 
-Tuzlupeybot, [Discord.js](https://discord.js.org) kullanılarak yazılmıştır. Ayrıca kullanım örnekleri için [Discord.js Guide](https://discordjs.guide) bakabilirsiniz.
+Tuzlupeybot, [Discord.js](https://discord.js.org) kullanılarak yazılmıştır. Kullanım örnekleri için [Discord.js Guide](https://discordjs.guide) inceleyebilirsiniz.
 
 ### Deploy
 
-Gönderdiğiniz merge request onaydan sonra [Heroku](https://herokuapp.com)'ya otomatik deploy olacaktır.
+Gönderdiğiniz merge request, onaydan sonra [Heroku](https://herokuapp.com)'ya deploy olacaktır.
