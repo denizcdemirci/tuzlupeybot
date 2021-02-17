@@ -15,5 +15,3 @@ production:
     - dpl --provider=heroku --app=tuzlupeybot --api-key=$HEROKU_API_KEY
   only:
     - master
-  tags:
-    - gitlab-runner
