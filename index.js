@@ -4,13 +4,13 @@ const fetch = require('node-fetch');
 const config = require('./config.json');
 
 client.on('guildMemberAdd', (member) => {
-  const channel = member.guild.channels.cache.find(channel => channel.id === config.mainChannel);
+  const channel = member.guild.channels.cache.find(ch => ch.name === 'sohbet');
   if (!channel) return;
   return channel.send(`**Tuzlu Peynir**'e hoş geldin ${member}, umarız keyifli vakit geçirirsin 🤔`);
 });
 
 client.on('guildMemberRemove', (member) => {
-  const channel = member.guild.channels.cache.find(channel => channel.id === config.mainChannel);
+  const channel = member.guild.channels.cache.find(ch => ch.name === 'sohbet');
   if (!channel) return;
   return channel.send(`${member} **Tuzlu Peynir**'den ayrıldı 🤔`);
 });
