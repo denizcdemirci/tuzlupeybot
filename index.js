@@ -52,7 +52,7 @@ client.on('message', async (message) => {
     }
   }
 
-  if (command === 'makine') {
+  if (command === 'makine' || command === 'makina') {
     const diffTime = Math.abs(new Date('05/16/2021') - new Date());
     if (diffTime > 0) {
       message.channel.send(`makine olmaya ${Math.floor(diffTime / 1000 / 60 / 60 / 24)} gün ${Math.floor((diffTime / 1000 / 60 / 60) % 24)} saat ${Math.floor((diffTime / 1000 / 60) % 60)} dakika kaldı`);
