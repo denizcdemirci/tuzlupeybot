@@ -61,6 +61,28 @@ client.on('message', async (message) => {
     }
     return message.react('743900789717598308');
   }
+
+  if (command === 'şafak') {
+    const maniler = [
+      'Bergamanın bol taşı\nNe yapalım binbaşı\nYârim askere gitti\nDinmez gözümün yaşı',
+      'Asker ettiler beni\nBilecik alayına\nAlır kaçırırım seni\nGelirse kolayıma',
+      'Askere gideceğim\nElbet geri döneceğim\nSen beni bekle csgo\nSana ömrümü vereceğim',
+      'ASKER OLDUM GİDERİM\nYOKTUR BENİM KADERİM\nFİNCAN GÖBEK ÜSTÜNDEN\nNARGİLEYİ ÇEKERİM',
+      'BİLECİK BAYIR MI\nHASAN ÇANTAN AĞIR MI\nHİÇ İZİNE GELMİYON\nBAŞ ÇAVUŞUN GAVUR MU',
+      'Hasan gider askere\nAlır gelir teskere\nTuzlu Peynir kurban olsun\nHasan gibi askere'
+    ];
+    const diffTime = Math.abs(new Date('09/26/2021') - new Date());
+    if (diffTime > 86400) {
+      message.channel.send(`${maniler[Math.floor((Math.random()*maniler.length))]}\n\nşafak atarsa ${Math.floor(diffTime / 1000 / 60 / 60 / 24)}`);
+      return message.react('🪖');
+    } else if (diffTime <= 86400) {
+      message.channelsend('şafak doğan güneş');
+      return message.react('🌞');
+    } else if (diffTime <= 0) {
+      message.channel.send('şafak attı');
+      return message.react('🎖️');
+    }
+  }
 });
 
 client.on('ready', () => {
