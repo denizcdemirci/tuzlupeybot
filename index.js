@@ -71,7 +71,7 @@ client.on('message', async (message) => {
       'BİLECİK BAYIR MI\nHASAN ÇANTAN AĞIR MI\nHİÇ İZİNE GELMİYON\nBAŞ ÇAVUŞUN GAVUR MU',
       'Hasan gider askere\nAlır gelir teskere\nTuzlu Peynir kurban olsun\nHasan gibi askere'
     ];
-    const diffTime = Math.abs(new Date('09/26/2021') - new Date());
+    const diffTime = Math.abs(new Date('09/15/2021') - new Date());
     if (diffTime > 86400) {
       message.channel.send(`${maniler[Math.floor((Math.random()*maniler.length))]}\n\nşafak atarsa ${Math.floor(diffTime / 1000 / 60 / 60 / 24)}`);
       return message.react('🪖');
