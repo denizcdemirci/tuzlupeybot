@@ -1,17 +1,16 @@
 const {Client, MessageAttachment} = require('discord.js');
 const client = new Client();
 const fetch = require('node-fetch');
+const moment = require('moment');
 const config = require('./config.json');
 
 client.on('guildMemberAdd', (member) => {
-  const channel = member.guild.channels.cache.find(ch => ch.name === 'sohbet');
-  if (!channel) return;
+  const channel = member.guild.channels.cache.find(channel => channel.id === config.mainChannel);
   return channel.send(`**Tuzlu Peynir**'e hoş geldin ${member}, umarız keyifli vakit geçirirsin 🤔`);
 });
 
 client.on('guildMemberRemove', (member) => {
-  const channel = member.guild.channels.cache.find(ch => ch.name === 'sohbet');
-  if (!channel) return;
+  const channel = member.guild.channels.cache.find(channel => channel.id === config.mainChannel);
   return channel.send(`${member} **Tuzlu Peynir**'den ayrıldı 🤔`);
 });
 
@@ -53,19 +52,19 @@ client.on('message', async (message) => {
   }
 
   if (command === 'makine' || command === 'makina') {
-    const diffTime = Math.abs(new Date('05/16/2021') - new Date());
-    if (diffTime > 0) {
-      message.channel.send(`makine olmaya ${Math.floor(diffTime / 1000 / 60 / 60 / 24)} gün ${Math.floor((diffTime / 1000 / 60 / 60) % 24)} saat ${Math.floor((diffTime / 1000 / 60) % 60)} dakika kaldı`);
+    const date = calculateTime('2021-05-16');
+    if (date.diff > 0) {
+      message.channel.send(`makine olmaya ${date.days} gün ${date.hours} saat ${date.minutes} dakika kaldı`);
     } else {
       message.channel.send('makine olundu');
     }
     return message.react('743900789717598308');
   }
 
-    if (command === 'tatil') {
-    const diffTime = Math.abs(new Date('05/20/2021') - new Date());
-    if (diffTime > 0) {
-      message.channel.send(`fethiyeye gitmeye ${Math.floor(diffTime / 1000 / 60 / 60 / 24)} gün ${Math.floor((diffTime / 1000 / 60 / 60) % 24)} saat ${Math.floor((diffTime / 1000 / 60) % 60)} dakika kaldı`);
+  if (command === 'tatil') {
+    const date = calculateTime('2021-05-20');
+    if (date.diff > 0) {
+      message.channel.send(`fethiyeye gitmeye ${date.days} gün ${date.hours} saat ${date.minutes} dakika kaldı`);
     } else {
       message.channel.send('tatildesiniz');
     }
@@ -73,6 +72,7 @@ client.on('message', async (message) => {
   }
 
   if (command === 'şafak') {
+    const date = calculateTime('2021-09-15');
     const maniler = [
       'Bergamanın bol taşı\nNe yapalım binbaşı\nYârim askere gitti\nDinmez gözümün yaşı',
       'Asker ettiler beni\nBilecik alayına\nAlır kaçırırım seni\nGelirse kolayıma',
@@ -81,14 +81,13 @@ client.on('message', async (message) => {
       'BİLECİK BAYIR MI\nHASAN ÇANTAN AĞIR MI\nHİÇ İZİNE GELMİYON\nBAŞ ÇAVUŞUN GAVUR MU',
       'Hasan gider askere\nAlır gelir teskere\nTuzlu Peynir kurban olsun\nHasan gibi askere'
     ];
-    const diffTime = Math.abs(new Date('09/15/2021') - new Date());
-    if (diffTime > 86400) {
-      message.channel.send(`${maniler[Math.floor((Math.random()*maniler.length))]}\n\nşafak atarsa ${Math.floor(diffTime / 1000 / 60 / 60 / 24)}`);
+    if (date.diff > 86400) {
+      message.channel.send(`${maniler[Math.floor((Math.random() * maniler.length))]}\n\nşafak atarsa ${date.days}`);
       return message.react('🪖');
-    } else if (diffTime <= 86400) {
+    } else if (date.diff <= 86400 && date.diff > 0) {
       message.channelsend('şafak doğan güneş');
       return message.react('🌞');
-    } else if (diffTime <= 0) {
+    } else if (date.diff <= 0) {
       message.channel.send('şafak attı');
       return message.react('🎖️');
     }
@@ -101,7 +100,11 @@ client.on('ready', () => {
     const args = interaction.data.options;
 
     if (command === 'yaz') {
-      return client.channels.cache.find(channel => channel.id === interaction.channel_id).send(args.find((command) => command.name === 'mesaj').value)
+      const text = args.find((command) => command.name === 'mesaj').value;
+      client.channels.cache.find(channel => channel.id === interaction.channel_id).send(text)
+
+      const channel = client.guild.channels.cache.find(channel => channel.id === config.modChannel);
+      return channel.send(`<@!${interaction.data.id}> bota şunu yazdırdı: ${text}`);
     }
 
     if (command === 'yap') {
@@ -134,5 +137,19 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 
   return client.user.setActivity(newState.channel.name.substr(newState.channel.name.indexOf(' ') + 1));
 });
+
+function calculateTime(date) {
+  const diff = moment.duration(moment(date).diff(moment()));
+  const days = parseInt(diff.asDays());
+  const hours = parseInt(diff.asHours()) - days * 24;
+  const minutes = parseInt(diff.asMinutes()) - (days * 24 * 60 + hours * 60);
+
+  return {
+    diff,
+    days,
+    hours,
+    minutes
+  }
+}
 
 client.login(process.env.DC_TOKEN);
