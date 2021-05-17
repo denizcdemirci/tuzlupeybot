@@ -103,8 +103,8 @@ client.on('ready', () => {
       const text = args.find((command) => command.name === 'mesaj').value;
       client.channels.cache.find(channel => channel.id === interaction.channel_id).send(text)
 
-      const channel = client.guild.channels.cache.find(channel => channel.id === config.modChannel);
-      return channel.send(`<@!${interaction.data.id}> bota şunu yazdırdı: ${text}`);
+      // const channel = client.guild.channels.cache.find(channel => channel.id === config.modChannel);
+      // return channel.send(`<@!${interaction.data.id}> bota şunu yazdırdı: ${text}`);
     }
 
     if (command === 'yap') {
