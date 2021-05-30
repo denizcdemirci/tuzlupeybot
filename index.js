@@ -93,11 +93,15 @@ client.on('message', async (message) => {
     }
   }
 
-  if (command === 'ses') {
+  if (command === 'hoşgeldin') {
     if (message.member.voice.channel) {
       await message.member.voice.channel.join();
     } else {
-      return message.reply('ses kanalında değilsin ki amk');
+      return message.reply('ses kanalında değilsin ki amk').then(botMessage => {
+        botMessage.delete({
+          timeout: config.replyTimeout
+        })
+      });
     }
   }
 });
