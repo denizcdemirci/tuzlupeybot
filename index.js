@@ -93,7 +93,7 @@ client.on('message', async (message) => {
     }
   }
 
-  if (command === 'hoşgeldin') {
+  if (command === 'hosgeldin' || command === 'hoşgeldin') {
     if (message.member.voice.channel) {
       await message.member.voice.channel.join();
     } else {
@@ -134,7 +134,10 @@ client.on('ready', () => {
 
       return client.api.interactions(interaction.id, interaction.token).callback.post({
         data: {
-          type: 5
+          type: 4,
+          data: {
+            content: 'tm'
+          }
         }
       });
     }
