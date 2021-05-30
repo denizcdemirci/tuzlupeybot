@@ -92,6 +92,14 @@ client.on('message', async (message) => {
       return message.react('🎖️');
     }
   }
+
+  if (command === 'ses') {
+    if (message.member.voice.channel) {
+      await message.member.voice.channel.join();
+    } else {
+      return message.reply('ses kanalında değilsin ki amk');
+    }
+  }
 });
 
 client.on('ready', () => {
@@ -100,16 +108,30 @@ client.on('ready', () => {
     const args = interaction.data.options;
 
     if (command === 'yaz') {
-      const text = args.find((command) => command.name === 'mesaj').value;
-      client.channels.cache.find(channel => channel.id === interaction.channel_id).send(text)
-
+      // const text = args.find((command) => command.name === 'yazı').value;
+      // client.channels.cache.find(channel => channel.id === interaction.channel_id).send(text)
       // const channel = client.guild.channels.cache.find(channel => channel.id === config.modChannel);
       // return channel.send(`<@!${interaction.data.id}> bota şunu yazdırdı: ${text}`);
+
+      return client.api.interactions(interaction.id, interaction.token).callback.post({
+        data: {
+          type: 4,
+          data: {
+            content: args.find((command) => command.name === 'yazı').value
+          }
+        }
+      });
     }
 
     if (command === 'yap') {
-      return await client.user.setActivity(args.find((command) => command.name === 'açıklama').value, {
+      await client.user.setActivity(args.find((command) => command.name === 'açıklama').value, {
         type: args.find((command) => command.name === 'aktivite').value
+      });
+
+      return client.api.interactions(interaction.id, interaction.token).callback.post({
+        data: {
+          type: 5
+        }
       });
     }
   });
