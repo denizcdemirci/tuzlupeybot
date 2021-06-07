@@ -52,11 +52,11 @@ client.on('message', async (message) => {
   }
 
   if (command === 'makine' || command === 'makina') {
-    const date = calculateTime('2021-05-16');
+    const date = calculateTime('2021-09-07');
     if (date.diff > 0) {
-      message.channel.send(`makine olmaya ${date.days} gün ${date.hours} saat ${date.minutes} dakika kaldı`);
+      message.channel.send(`${command} olmaya ${date.days} gün ${date.hours} saat ${date.minutes} dakika kaldı`);
     } else {
-      message.channel.send('makine olundu');
+      message.channel.send(`${command} olundu`);
     }
     return message.react('743900789717598308');
   }
