@@ -61,18 +61,8 @@ client.on('message', async (message) => {
     return message.react('743900789717598308');
   }
 
-  if (command === 'tatil') {
-    const date = calculateTime('2021-05-20');
-    if (date.diff > 0) {
-      message.channel.send(`fethiyeye gitmeye ${date.days} gün ${date.hours} saat ${date.minutes} dakika kaldı`);
-    } else {
-      message.channel.send('tatildesiniz');
-    }
-    return message.react('743900789717598308');
-  }
-
   if (command === 'şafak') {
-    const date = calculateTime('2021-09-15');
+    const date = calculateTime('2021-09-13');
     const maniler = [
       'Bergamanın bol taşı\nNe yapalım binbaşı\nYârim askere gitti\nDinmez gözümün yaşı',
       'Asker ettiler beni\nBilecik alayına\nAlır kaçırırım seni\nGelirse kolayıma',
