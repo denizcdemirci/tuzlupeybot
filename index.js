@@ -62,7 +62,7 @@ client.on('message', async (message) => {
   }
 
   if (command === 'şafak') {
-    const date = calculateTime('2021-09-13');
+    const date = calculateTime('2021-09-16');
     const maniler = [
       'Bergamanın bol taşı\nNe yapalım binbaşı\nYârim askere gitti\nDinmez gözümün yaşı',
       'Asker ettiler beni\nBilecik alayına\nAlır kaçırırım seni\nGelirse kolayıma',
