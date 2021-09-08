@@ -1,7 +1,7 @@
 const {Client, MessageAttachment} = require('discord.js');
 const client = new Client();
 const fetch = require('node-fetch');
-const moment = require('moment');
+const moment = require('moment-timezone');
 const config = require('./config.json');
 
 client.on('guildMemberAdd', (member) => {
@@ -84,8 +84,8 @@ client.on('message', async (message) => {
   }
 
   if (command === 'sigara') {
-    const { days } = calculateTime('2021-09-07', false);
-    message.channel.send(`cihan ${days} gündür sigara içmiyor\n${days * 16}₺ para biriktirdi`);
+    const { days, hours, minutes } = calculateTime('2021-09-07', false);
+    message.channel.send(`cihan ${days} gün ${hours} saat ${minutes} dakikadır sigara içmiyor\n${days * 16}₺ para biriktirdi`);
     return message.react('🚬');
   }
 
@@ -164,7 +164,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 });
 
 function calculateTime(date, countdown = true) {
-  const diff = countdown ? moment.duration(moment(date).diff(moment())) : moment.duration(moment().diff(moment(date)));
+  const diff = countdown ? moment.tz('Europe/Istanbul').duration(moment(date).diff(moment())) : moment.tz('Europe/Istanbul').duration(moment().diff(moment(date)));
   const days = parseInt(diff.asDays());
   const hours = parseInt(diff.asHours()) - days * 24;
   const minutes = parseInt(diff.asMinutes()) - (days * 24 * 60 + hours * 60);
