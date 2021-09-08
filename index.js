@@ -164,7 +164,8 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 });
 
 function calculateTime(date, countdown = true) {
-  const diff = countdown ? moment.tz('Europe/Istanbul').duration(moment(date).diff(moment())) : moment.tz('Europe/Istanbul').duration(moment().diff(moment(date)));
+  moment.tz.setDefault('Europe/Istanbul');
+  const diff = countdown ? moment.duration(moment(date).diff(moment())) : moment.duration(moment().diff(moment(date)));
   const days = parseInt(diff.asDays());
   const hours = parseInt(diff.asHours()) - days * 24;
   const minutes = parseInt(diff.asMinutes()) - (days * 24 * 60 + hours * 60);
