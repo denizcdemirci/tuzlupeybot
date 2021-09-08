@@ -52,9 +52,9 @@ client.on('message', async (message) => {
   }
 
   if (command === 'makine' || command === 'makina') {
-    const date = calculateTime('2021-09-07');
-    if (date.diff > 0) {
-      message.channel.send(`${command} olmaya ${date.days} gün ${date.hours} saat ${date.minutes} dakika kaldı`);
+    const { diff, days, hours, minutes } = calculateTime('2021-09-07');
+    if (diff > 0) {
+      message.channel.send(`${command} olmaya ${days} gün ${hours} saat ${minutes} dakika kaldı`);
     } else {
       message.channel.send(`${command} olundu`);
     }
@@ -62,7 +62,7 @@ client.on('message', async (message) => {
   }
 
   if (command === 'şafak') {
-    const date = calculateTime('2021-09-16');
+    const { diff, days } = calculateTime('2021-09-16');
     const maniler = [
       'Bergamanın bol taşı\nNe yapalım binbaşı\nYârim askere gitti\nDinmez gözümün yaşı',
       'Asker ettiler beni\nBilecik alayına\nAlır kaçırırım seni\nGelirse kolayıma',
@@ -71,16 +71,22 @@ client.on('message', async (message) => {
       'BİLECİK BAYIR MI\nHASAN ÇANTAN AĞIR MI\nHİÇ İZİNE GELMİYON\nBAŞ ÇAVUŞUN GAVUR MU',
       'Hasan gider askere\nAlır gelir teskere\nTuzlu Peynir kurban olsun\nHasan gibi askere'
     ];
-    if (date.diff > 86400) {
-      message.channel.send(`${maniler[Math.floor((Math.random() * maniler.length))]}\n\nşafak atarsa ${date.days}`);
+    if (diff > 86400) {
+      message.channel.send(`${maniler[Math.floor((Math.random() * maniler.length))]}\n\nşafak atarsa ${days}`);
       return message.react('🪖');
-    } else if (date.diff <= 86400 && date.diff > 0) {
+    } else if (diff <= 86400 && diff > 0) {
       message.channelsend('şafak doğan güneş');
       return message.react('🌞');
-    } else if (date.diff <= 0) {
+    } else if (diff <= 0) {
       message.channel.send('şafak attı');
       return message.react('🎖️');
     }
+  }
+
+  if (command === 'sigara') {
+    const { days } = calculateTime('2021-09-07', false);
+    message.channel.send(`cihan ${days} gündür sigara içmiyor\n${days * 16}₺ para biriktirdi`);
+    return message.react('🚬');
   }
 
   if (command === 'hosgeldin' || command === 'hoşgeldin') {
@@ -157,8 +163,8 @@ client.on('voiceStateUpdate', (oldState, newState) => {
   return client.user.setActivity(newState.channel.name.substr(newState.channel.name.indexOf(' ') + 1));
 });
 
-function calculateTime(date) {
-  const diff = moment.duration(moment(date).diff(moment()));
+function calculateTime(date, countdown = true) {
+  const diff = countdown ? moment.duration(moment(date).diff(moment())) : moment.duration(moment().diff(moment(date)));
   const days = parseInt(diff.asDays());
   const hours = parseInt(diff.asHours()) - days * 24;
   const minutes = parseInt(diff.asMinutes()) - (days * 24 * 60 + hours * 60);
