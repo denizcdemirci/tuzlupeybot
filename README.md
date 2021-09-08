@@ -11,7 +11,7 @@ Tüm Tuzlu Peynir üyeleri botu istediği şekilde geliştirebilir.
 ### Kurulum
 
 ```sh
-$ git clone git@gitlab.com:denizcdemirci/tuzlupeybot.git
+$ git clone git@github.com:denizcdemirci/tuzlupeybot.git
 $ cd tuzlupeybot
 $ npm install
 ```
