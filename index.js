@@ -85,7 +85,7 @@ client.on('message', async (message) => {
 
   if (command === 'sigara') {
     const { days, hours, minutes, minutesDiff } = calculateTime('2021-09-07 13:00', false);
-    message.channel.send(`cihan ${days} gün ${hours} saat ${minutes} dakikadır sigara içmiyor\n${(minutesDiff / 72).toFixed(0)} dal sigara içmedi ve ${days * 16}₺ para biriktirdi`);
+    message.channel.send(`cihan ${days} gün ${hours} saat ${minutes} dakikadır sigara içmiyor\n${(minutesDiff / 72).toFixed(0)} dal sigara içmedi ve ${((minutesDiff / 72).toFixed(0) * 16 / 20).toFixed(2)}₺ para biriktirdi`);
     return message.react('🚬');
   }
 
