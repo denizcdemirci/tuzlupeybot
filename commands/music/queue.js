@@ -12,8 +12,8 @@ module.exports = {
 
     if (!client.player.getQueue(message)) return message.reply('şu anda herhangi bir müzik çalmıyor 😋');
 
-    message.channel.send(`**Server queue - ${message.guild.name} 📊 ${client.player.getQueue(message).loopMode ? '(looped)' : ''}**\nCurrent : ${queue.playing.title} | ${queue.playing.author}\n\n` + (queue.tracks.map((track, i) => {
-      return `**#${i + 1}** - ${track.title} | ${track.author} (requested by : ${track.requestedBy.username})`
-    }).slice(0, 5).join('\n') + `\n\n${queue.tracks.length > 5 ? `And **${queue.tracks.length - 5}** other songs...` : `In the playlist **${queue.tracks.length}** song(s)...`}`));
+    message.channel.send(`**Çalma listesi ${client.player.getQueue(message).loopMode ? '(döngüde)' : ''}**\nŞu anda çalan: ${queue.playing.title} | ${queue.playing.author}\n\n` + (queue.tracks.map((track, i) => {
+      return `**#${i + 1}** - ${track.title} | ${track.author} (çalınmasını isteyen: ${track.requestedBy.username})`
+    }).slice(0, 5).join('\n') + `\n\n${queue.tracks.length > 5 ? `ve **${queue.tracks.length - 5}** diğer müzik listede` : `Çalma listesinde toplam **${queue.tracks.length}** müzik var.`}`));
   },
 };

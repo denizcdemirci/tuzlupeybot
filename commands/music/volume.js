@@ -16,6 +16,6 @@ module.exports = {
 
     const success = client.player.setVolume(message, parseInt(args[0]));
 
-    if (success) message.channel.send(`🔉 ses seviyesi **${parseInt(args[0])}%** olarak ayarlandı`);
+    if (success) message.channel.send(`🔉 ses seviyesi **%${parseInt(args[0])}** olarak ayarlandı`);
   },
 };

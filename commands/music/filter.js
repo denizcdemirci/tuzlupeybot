@@ -14,7 +14,7 @@ module.exports = {
 
     const filterToUpdate = client.config.filters.find((x) => x.toLowerCase() === args[0].toLowerCase());
 
-    if (!filterToUpdate) return message.reply('böyle bir filtre yok ki amk 😡 bir de şunlar dene: `8D`, `vibrato`, `pulsator`');
+    if (!filterToUpdate) return message.reply('böyle bir filtre yok ki amk 😡 bir de şunları dene: `8D`, `vibrato`, `pulsator`');
 
     const filtersUpdated = {};
 

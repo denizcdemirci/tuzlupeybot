@@ -24,6 +24,6 @@ Tuzlupeybot, [Discord.js](https://discord.js.org) kullanılarak yazılmıştır.
 
 Gönderdiğiniz merge request, onaydan sonra [Heroku](https://herokuapp.com)'ya deploy olacaktır.
 
-### teşekkür
+### Teşekkür
 
-Botumuza müzik çalma özelliğini eklemek için [ZerioDev/Music-bot](https://github.com/ZerioDev/Music-bot) reposunu örnek aldık.
+Botumuza müzik çalma özelliğini eklemek için [ZerioDev/Music-bot](https://github.com/ZerioDev/Music-bot) projesini örnek aldık.

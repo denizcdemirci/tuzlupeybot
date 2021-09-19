@@ -10,7 +10,7 @@ module.exports = {
 
     if (!client.player.getQueue(message)) return message.reply('şu anda herhangi bir müzik çalmıyor 😋');
 
-    if (client.player.getQueue(message).tracks.length <= 1) return message.reply('sırada sadece bir şarkı var 😘');
+    if (client.player.getQueue(message).tracks.length <= 1) return message.reply('sırada sadece bir müzik var 😘');
 
     client.player.clearQueue(message);
 

@@ -10,7 +10,7 @@ module.exports = (client, error, message, ...args) => {
       message.channel.send('ses kanalına katılamıyorum. rolümü kontrol eder misin 😇');
       break;
     case 'VideoUnavailable':
-      message.channel.send(`\`${args[0].title}\` ülkende engelli olduğu için çalamıyorum ve sıradaki şarkıya geçiyorum... 🇹🇷`);
+      message.channel.send(`\`${args[0].title}\` ülkende engelli olduğu için çalamıyorum ve sıradaki müziğe geçiyorum... 🇹🇷`);
       break;
     case 'MusicStarting':
       message.channel.send('müzik başlıyor... lütfen bekle ve tekrar dene ☺️');

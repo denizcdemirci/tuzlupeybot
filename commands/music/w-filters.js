@@ -20,6 +20,7 @@ module.exports = {
     message.channel.send({
       embed: {
         color: 'ORANGE',
+        description: `İşte etkinleştirilen veya devre dışı bırakılan tüm filtrelerin listesi.\nMüziğe filtre eklemek için \`${client.config.discord.prefix}filter\` komutunu kullanabilirsin.`,
         fields: [
           {
             name: 'Filtreler',
@@ -32,7 +33,6 @@ module.exports = {
             inline: true
           },
         ],
-        description: `İşte etkinleştirilen veya devre dışı bırakılan tüm filtrelerin listesi.\nŞarkıya filtre eklemek için \`${client.config.discord.prefix}filter\` komutunu kullan.`,
       },
     });
   },
