@@ -1,6 +1,6 @@
 {
   "name": "tuzlupeybot",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "The bot of Tuzlu Peynir Discord channel",
   "license": "MIT",
   "main": "index.js",
