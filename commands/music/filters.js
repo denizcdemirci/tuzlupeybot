@@ -1,8 +1,8 @@
 module.exports = {
-  name: 'w-filters',
-  aliases: ['filters'],
+  name: 'filters',
+  aliases: [],
   category: 'Music',
-  utilisation: '{prefix}w-filters',
+  utilisation: '{prefix}filters',
   execute(client, message) {
     if (!message.member.voice.channel) return message.reply('ses kanalında değilsin ki. nasıl müzik açmamı bekliyorsun? ☺️');
 

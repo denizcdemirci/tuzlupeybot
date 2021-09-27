@@ -14,7 +14,7 @@ module.exports = {
 
     const filterToUpdate = client.config.filters.find((x) => x.toLowerCase() === args[0].toLowerCase());
 
-    if (!filterToUpdate) return message.reply('böyle bir filtre yok ki amk 😡 bir de şunları dene: `8D`, `vibrato`, `pulsator`');
+    if (!filterToUpdate) return message.reply('böyle bir filtre yok ki amk 😡 bir de şunları dene: `bassboost`, `vibrato`, `vaporwave`');
 
     const filtersUpdated = {};
 
@@ -22,7 +22,7 @@ module.exports = {
 
     client.player.setFilters(message, filtersUpdated);
 
-    if (filtersUpdated[filterToUpdate]) message.channel.send('müziğe filtre ekliyorum, lütfen bekle. not: müzik ne kadar uzunsa filtre eklemem o kadar uzun sürecek 🥲');
-    else message.channel.send('müzikteki filtreyi kaldırıyorum, lütfen bekle. not: müzik ne kadar uzunsa filtreyi kaldırmam o kadar uzun sürecek 🥲');
+    if (filtersUpdated[filterToUpdate]) message.channel.reply('müziğe filtre ekliyorum, lütfen bekle. not: müzik ne kadar uzunsa filtre eklemem o kadar uzun sürecek 🥲');
+    else message.channel.reply('müzikteki filtreyi kaldırıyorum, lütfen bekle. not: müzik ne kadar uzunsa filtreyi kaldırmam o kadar uzun sürecek 🥲');
   },
 };
