@@ -22,7 +22,7 @@ module.exports = {
 
     client.player.setFilters(message, filtersUpdated);
 
-    if (filtersUpdated[filterToUpdate]) message.channel.reply('müziğe filtre ekliyorum, lütfen bekle. not: müzik ne kadar uzunsa filtre eklemem o kadar uzun sürecek 🥲');
-    else message.channel.reply('müzikteki filtreyi kaldırıyorum, lütfen bekle. not: müzik ne kadar uzunsa filtreyi kaldırmam o kadar uzun sürecek 🥲');
+    if (filtersUpdated[filterToUpdate]) message.reply('müziğe filtre ekliyorum, lütfen bekle. not: müzik ne kadar uzunsa filtre eklemem o kadar uzun sürecek 🥲');
+    else message.reply('müzikteki filtreyi kaldırıyorum, lütfen bekle. not: müzik ne kadar uzunsa filtreyi kaldırmam o kadar uzun sürecek 🥲');
   },
 };
