@@ -24,7 +24,8 @@ fetch("https://api.apilayer.com/exchangerates_data/latest?base=usd", {
         2
       )} TL civarında oynaşmakta.\nDenizin istediği macbook ise bir sonraki fiyat güncellemesinde ${(
         2516 * TRY
-      ).toFixed(2)} TL olacak. <:Sadge:834156037279973386>`
+      ).toFixed(2)} TL olacak. Zeta'nın gitmek istediği yurtdışı seyahatinin masrafları 
+    bir sonraki fiyat güncellemesinde ${(1500*TRY).toFixed(2)} TL olacak. <:Sadge:834156037279973386>`
     );
   })
   .catch((e) => {
