@@ -7,9 +7,9 @@
   "dependencies": {
     "@discordjs/opus": "^0.6.0",
     "discord-player": "^4.1.4",
-    "discord.js": "^12.5.3",
-    "ffmpeg-static": "^4.4.0",
-    "moment-timezone": "^0.5.33",
-    "node-fetch": "^2.6.2"
+    "discord.js": "^13.2.0",
+    "ffmpeg-static": "^4.4.1",
+    "moment-timezone": "^0.5.41",
+    "node-fetch": "^2.6.9"
   }
 }
