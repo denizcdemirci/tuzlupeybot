@@ -8,7 +8,7 @@ module.exports = {
       const response = await fetch('https://api.apilayer.com/exchangerates_data/latest?base=usd', {
         method: 'GET',
         headers: {
-          apikey: 'K8707gqiH3gnFgRvcKFy2pBESDp9G8Nf'
+          apikey: process.env.APILAYER_TOKEN
         },
       });
 
