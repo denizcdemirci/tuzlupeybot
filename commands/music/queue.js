@@ -21,7 +21,7 @@ module.exports = {
 
     const songs = queue.tracks.length;
 
-    const nextSongs = songs > 5 ? `**${songs - 5}** müzik daha ekle...` : `çalma listesinden **${songs}** şarkı...`;
+    const nextSongs = songs > 5 ? `**${songs - 5}** müzik daha ekle...` : `çalma listesinden **${songs}** müzik...`;
 
     const tracks = queue.tracks.map((track, i) => `**${i + 1}** - ${track.title} | ${track.author} (${track.requestedBy.username} tarafından talep edildi)`);
 

@@ -30,6 +30,13 @@ module.exports = {
       .setThumbnail(track.thumbnail)
       .setDescription(`Ses seviyesi **%${queue.volume}**\nSüre **${trackDuration}**\nİlerleme ${progress}\nTekrar modu **${methods[queue.repeatMode]}**\n${track.requestedBy} tarafından talep edildi`)
 
+    const saveButton = new ButtonBuilder()
+      .setLabel('Kaydet')
+      .setCustomId(JSON.stringify({
+        ffb: 'savetrack'
+      }))
+      .setStyle('Danger')
+
     const volumeup = new ButtonBuilder()
       .setLabel('Sesi arttır')
       .setCustomId(JSON.stringify({
@@ -58,7 +65,7 @@ module.exports = {
       }))
       .setStyle('Success');
 
-    const row = new ActionRowBuilder().addComponents(volumedown, resumepause, loop, volumeup);
+    const row = new ActionRowBuilder().addComponents(volumedown, saveButton, resumepause, loop, volumeup);
 
     inter.reply({
       embeds: [embed],
