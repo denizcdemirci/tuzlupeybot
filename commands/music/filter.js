@@ -48,7 +48,7 @@ module.exports = {
     await queue.setFilters(filtersUpdated);
 
     inter.reply({
-      content: `${filter} filtresi artık **${queue.getFiltersEnabled().includes(filter) ? 'etkin' : 'devre dışı'}** ✅\n*not: müzik ne kadar uzunsa filtreyi ${queue.getFiltersEnabled().includes(filter) ? 'eklemem' : 'kaldırmam'} o kadar uzun sürecek 🥲*`
+      content: `${filter} filtresi **${queue.getFiltersEnabled().includes(filter) ? 'etkin' : 'devre dışı'}** 🤙🏻\n*not: müzik ne kadar uzunsa filtreyi ${queue.getFiltersEnabled().includes(filter) ? 'eklemem' : 'kaldırmam'} o kadar uzun sürecek 🥲*`
     });
   },
 };

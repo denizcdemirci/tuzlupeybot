@@ -2,12 +2,12 @@ const { EmbedBuilder } = require('discord.js');
 
 module.exports = async ({client, inter, queue}) => {
   if (!queue || !queue.playing) return inter.reply({
-    content: `No music currently playing... try again ? ❌`,
+    content: 'şu anda herhangi bir müzik çalmıyor 😡',
     ephemeral: true
   });
 
   if (!queue.tracks[0]) return inter.reply({
-    content: `No music in the queue after the current one ${inter.member}... try again ? ❌`,
+    content: 'bu müzikten sonra oynatma listesinde başka müzik yok 😡',
     ephemeral: true
   });
 
@@ -15,9 +15,9 @@ module.exports = async ({client, inter, queue}) => {
 
   const songs = queue.tracks.length;
 
-  const nextSongs = songs > 5 ? `And **${songs - 5}** other song(s)...` : `In the playlist **${songs}** song(s)...`;
+  const nextSongs = songs > 5 ? `**${songs - 5}** müzik daha ekle...` : `çalma listesinden **${songs}** şarkı...`;
 
-  const tracks = queue.tracks.map((track, i) => `**${i + 1}** - ${track.title} | ${track.author} (requested by : ${track.requestedBy.username})`);
+  const tracks = queue.tracks.map((track, i) => `**${i + 1}** - ${track.title} | ${track.author} (${track.requestedBy.username} tarafından talep edildi)`);
 
   const embed = new EmbedBuilder()
     .setThumbnail(inter.guild.iconURL({
@@ -25,13 +25,13 @@ module.exports = async ({client, inter, queue}) => {
       dynamic: true
     }))
     .setAuthor({
-      name: `Server queue - ${inter.guild.name} ${methods[queue.repeatMode]}`,
+      name: `Sunucu sırası - ${inter.guild.name} ${methods[queue.repeatMode]}`,
       iconURL: client.user.displayAvatarURL({
         size: 1024,
         dynamic: true
       })
     })
-    .setDescription(`Current ${queue.current.title}\n\n${tracks.slice(0, 5).join('\n')}\n\n${nextSongs}`)
+    .setDescription(`Şu anda ${queue.current.title}\n\n${tracks.slice(0, 5).join('\n')}\n\n${nextSongs}`)
 
   inter.reply({
     embeds: [embed],

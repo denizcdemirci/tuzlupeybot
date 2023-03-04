@@ -1,6 +1,6 @@
 module.exports = {
   name: 'pause',
-  description: 'Müziği duraklat',
+  description: 'Müziği duraklatır',
   voiceChannel: true,
   execute({ inter }) {
     const queue = player.getQueue(inter.guildId);

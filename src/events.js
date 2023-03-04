@@ -21,7 +21,6 @@ player.on('trackStart', (queue, track) => {
       name: `🎶 şu anda ${queue.connection.channel.name} kanalında ${track.title} çalıyor 🥳`,
       iconURL: track.requestedBy.avatarURL()
     })
-    .setColor('#13f857');
 
   const back = new ButtonBuilder()
     .setLabel('Önceki')

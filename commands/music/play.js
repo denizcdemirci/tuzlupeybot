@@ -3,7 +3,7 @@ const { QueryType } = require('discord-player');
 
 module.exports = {
   name: 'play',
-  description: 'Müziği başlat',
+  description: 'Müziği başlatır',
   voiceChannel: true,
   options: [
     {

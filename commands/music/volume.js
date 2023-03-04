@@ -32,7 +32,7 @@ module.exports = {
     const success = queue.setVolume(vol);
 
     return inter.reply({
-      content: success ? `ses seviyesi **${vol}**/**${client.config.opt.maxVol}**% olarak değiştirildi 🔊` : 'bi\'şeyler ters gitti...'
+      content: success ? `ses seviyesi %**${vol}**/**${client.config.opt.maxVol}** olarak değiştirildi 🔊` : 'bi\'şeyler ters gitti...'
     });
   },
 };

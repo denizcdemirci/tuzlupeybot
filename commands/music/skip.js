@@ -13,7 +13,7 @@ module.exports = {
     const success = queue.skip();
 
     return inter.reply({
-      content: success ? `şu anki müzik ${queue.current.title} geçildi` : 'bi\'şeyler ters gitti...'
+      content: success ? `${queue.current.title} geçildi` : 'bi\'şeyler ters gitti...'
     });
   },
 };

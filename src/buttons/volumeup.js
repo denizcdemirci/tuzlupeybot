@@ -1,25 +1,25 @@
-wmodule.exports = async ({inter, queue}) => {
+module.exports = async ({inter, queue}) => {
   if (!queue || !queue.playing) return inter.reply({
-    content: `No music currently playing... try again ? ❌`,
+    content: 'şu anda herhangi bir müzik çalmıyor 😡',
     ephemeral: true
   });
 
   const vol = Math.floor(queue.volume + 5);
 
   if (vol > client.config.opt.maxVol) return inter.reply({
-    content: `I can not move the volume up any more ${inter.member}... try again ? ❌`,
+    content: 'sesi daha fazla arttıramıyorum 😔',
     ephemeral: true
   });
 
   if (queue.volume === vol) return inter.reply({
-    content: `The volume you want to change is already the current one ${inter.member}... try again ? ❌`,
+    content: 'değiştirmek istediğin ses seviyesi zaten bu 😐',
     ephemeral: true
   });
 
   const success = queue.setVolume(vol);
 
   return inter.reply({
-    content: success ? `The volume has been modified to **${vol}**/**${client.config.opt.maxVol}**% 🔊` : `Something went wrong ${inter.member}... try again ? ❌`,
+    content: success ? `ses seviyesi %**${vol}**/**${client.config.opt.maxVol}** olarak değiştirildi 🔊` : 'bi\'şeyler ters gitti...',
     ephemeral: true
   });
 };

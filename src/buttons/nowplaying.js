@@ -2,7 +2,7 @@ const { EmbedBuilder } = require('discord.js');
 
 module.exports = async ({client, inter, queue}) => {
   if (!queue || !queue.playing) return inter.reply({
-    content: `No music currently playing... try again ? ❌`,
+    content: 'şu anda herhangi bir müzik çalmıyor 😡',
     ephemeral: true
   });
 
@@ -12,7 +12,7 @@ module.exports = async ({client, inter, queue}) => {
 
   const timestamp = queue.getPlayerTimestamp();
 
-  const trackDuration = timestamp.progress === 'Infinity' ? 'infinity (live)' : track.duration;
+  const trackDuration = timestamp.progress === 'Infinity' ? 'sonsuz (canlı)' : track.duration;
 
   const progress = queue.createProgressBar();
 
@@ -25,8 +25,7 @@ module.exports = async ({client, inter, queue}) => {
       }),
     })
     .setThumbnail(track.thumbnail)
-    .setDescription(`Volume **${queue.volume}**%\nDuration **${trackDuration}**\nProgress ${progress}\nLoop mode **${methods[queue.repeatMode]}**\nRequested by ${track.requestedBy}`)
-    .setColor('ff0000');
+    .setDescription(`Ses seviyesi **%${queue.volume}**\nSüre **${trackDuration}**\nİlerleme ${progress}\nTekrar modu **${methods[queue.repeatMode]}**\n${track.requestedBy} tarafından talep edildi`)
 
   inter.reply({
     embeds: [embed],

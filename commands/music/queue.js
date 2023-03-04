@@ -2,7 +2,7 @@ const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
   name: 'queue',
-  description: 'Sıradaki müzikleri al',
+  description: 'Sıradaki müzikleri alır',
   voiceChannel: true,
   execute({client, inter}) {
     const queue = player.getQueue(inter.guildId);
@@ -23,13 +23,19 @@ module.exports = {
 
     const nextSongs = songs > 5 ? `**${songs - 5}** müzik daha ekle...` : `çalma listesinden **${songs}** şarkı...`;
 
-    const tracks = queue.tracks.map((track, i) => `**${i + 1}** - ${track.title} | ${track.author} (requested by : ${track.requestedBy.username})`);
+    const tracks = queue.tracks.map((track, i) => `**${i + 1}** - ${track.title} | ${track.author} (${track.requestedBy.username} tarafından talep edildi)`);
 
     const embed = new EmbedBuilder()
-      .setThumbnail(inter.guild.iconURL({size: 2048, dynamic: true}))
+      .setThumbnail(inter.guild.iconURL({
+        size: 2048,
+        dynamic: true
+      }))
       .setAuthor({
         name: `Sunucu sırası - ${inter.guild.name} ${methods[queue.repeatMode]}`,
-        iconURL: client.user.displayAvatarURL({size: 1024, dynamic: true})
+        iconURL: client.user.displayAvatarURL({
+          size: 1024,
+          dynamic: true
+        })
       })
       .setDescription(`Şu anda ${queue.current.title}\n\n${tracks.slice(0, 5).join('\n')}\n\n${nextSongs}`);
 

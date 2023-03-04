@@ -1,13 +1,13 @@
 module.exports = async ({inter, queue}) => {
   if (!queue || !queue.playing) return inter.reply({
-    content: `No music currently playing... try again ? ❌`,
+    content: 'şu anda herhangi bir müzik çalmıyor 😡',
     ephemeral: true
   });
 
   const success = queue.skip();
 
   return inter.reply({
-    content: success ? `Current music ${queue.current.title} skipped ✅` : `Something went wrong ${inter.member}... try again ? ❌`,
+    content: success ? `${queue.current.title} geçildi` : 'bi\'şeyler ters gitti...',
     ephemeral: true
   });
 };

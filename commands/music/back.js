@@ -1,6 +1,6 @@
 module.exports = {
   name: 'back',
-  description: 'Önceki müziğe geri dön',
+  description: 'Önceki müziğe geri döner',
   voiceChannel: true,
   async execute({ inter }) {
     const queue = player.getQueue(inter.guildId);

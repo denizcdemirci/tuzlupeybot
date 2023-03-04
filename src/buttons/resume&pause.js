@@ -1,6 +1,6 @@
 module.exports = async ({inter, queue}) => {
   if (!queue || !queue.playing) return inter.reply({
-    content: `No music currently playing... try again ? ❌`,
+    content: 'şu anda herhangi bir müzik çalmıyor 😡',
     ephemeral: true
   });
 
@@ -9,7 +9,7 @@ module.exports = async ({inter, queue}) => {
   if (!success) queue.setPaused(true);
 
   return inter.reply({
-    content: `${success ? `Current music ${queue.current.title} paused ✅` : `Current music ${queue.current.title} resumed ✅`}`,
+    content: `${success ? `${queue.current.title} duraklatıldı` : `${queue.current.title} devam ettirildi`}`,
     ephemeral: true
   });
 };
