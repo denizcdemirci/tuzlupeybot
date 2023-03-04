@@ -1,18 +1,15 @@
+const calculateTime = require('../../src/utils/calculateTime');
+
 module.exports = {
   name: 'tatil',
-  aliases: [],
-  category: 'General',
-  utilisation: '{prefix}tatil',
-  execute(client, message) {
-    const calculateTime = require('../../utils/calculateTime');
+  description: 'Tatile ne zaman gidiyoruz?',
+  execute({ inter }) {
     const { diff, days, hours, minutes } = calculateTime('2021-05-20');
 
     if (diff > 0) {
-      message.channel.send(`fethiyeye gitmeye ${days} gün ${hours} saat ${minutes} dakika kaldı`);
+      inter.reply(`fethiyeye gitmeye ${days} gün ${hours} saat ${minutes} dakika kaldı`);
     } else {
-      message.channel.send('tatildesiniz');
+      inter.reply('tatildesiniz');
     }
-
-    message.react('743900789717598308');
   },
 };

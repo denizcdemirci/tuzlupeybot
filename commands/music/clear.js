@@ -1,6 +1,6 @@
 module.exports = {
-  name: 'shuffle',
-  description: 'Müziği karışık çalar',
+  name: 'clear',
+  description: 'Oynatma listesindeki tüm müzikleri siler',
   voiceChannel: true,
   async execute({ inter }) {
     const queue = player.getQueue(inter.guildId);
@@ -15,10 +15,8 @@ module.exports = {
       ephemeral: true
     });
 
-    await queue.shuffle();
+    await queue.clear();
 
-    return inter.reply({
-      content: `**${queue.tracks.length}** müzik karıştırıldı 👍🏻`,
-    });
+    inter.reply('oynatma listesi temizlendi 🗑️');
   },
 };

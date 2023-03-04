@@ -1,19 +1,19 @@
 module.exports = {
   name: 'stop',
-  aliases: ['dc'],
-  category: 'Music',
-  utilisation: '{prefix}stop',
-  execute(client, message) {
-    if (!message.member.voice.channel) return message.reply('ses kanalında değilsin ki. nasıl müzik açmamı bekliyorsun? ☺️');
+  description: 'Müziği durdurur',
+  voiceChannel: true,
+  execute({ inter }) {
+    const queue = player.getQueue(inter.guildId);
 
-    if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.reply(`şu anda \`${message.member.voice.channel.name}\` kanalında müzik çalıyor. önce o kanala gitmelisin 😉`);
+    if (!queue || !queue.playing) return inter.reply({
+      content: 'şu anda herhangi bir müzik çalmıyor 😡',
+      ephemeral: true
+    });
 
-    if (!client.player.getQueue(message)) return message.reply('şu anda herhangi bir müzik çalmıyor 😋');
+    queue.destroy();
 
-    client.player.setRepeatMode(message, false);
-
-    const success = client.player.stop(message);
-
-    if (success) message.channel.send('müzik durduruldu 😨');
+    inter.reply({
+      content: 'müzik durduruldu 😨'
+    });
   },
 };

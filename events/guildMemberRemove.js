@@ -1,5 +1,5 @@
 module.exports = (client, member) => {
-  const channel = member.guild.channels.cache.find(channel => channel.id === client.config.discord.mainChannel);
+  const channel = member.guild.channels.cache.find(channel => channel.id === client.config.app.mainChannel);
 
-  channel.send(`${member}, **${member.guild.name}** kanalından ayrıldı 🤔`);
+  channel.send(`${member}, **${member.guild.name}** sunucusundan ayrıldı 🤔`);
 };

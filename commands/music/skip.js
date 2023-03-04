@@ -1,17 +1,19 @@
 module.exports = {
   name: 'skip',
-  aliases: ['sk'],
-  category: 'Music',
-  utilisation: '{prefix}skip',
-  execute(client, message) {
-    if (!message.member.voice.channel) return message.reply('ses kanalında değilsin ki. nasıl müzik açmamı bekliyorsun? ☺️');
+  description: 'Bir sonraki müziğe geçer',
+  voiceChannel: true,
+  execute({ inter }) {
+    const queue = player.getQueue(inter.guildId);
 
-    if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.reply(`şu anda \`${message.member.voice.channel.name}\` kanalında müzik çalıyor. önce o kanala gitmelisin 😉`);
+    if (!queue || !queue.playing) return inter.reply({
+      content: 'şu anda herhangi bir müzik çalmıyor 😡',
+      ephemeral: true
+    });
 
-    if (!client.player.getQueue(message)) return message.reply('şu anda herhangi bir müzik çalmıyor 😋');
+    const success = queue.skip();
 
-    const success = client.player.skip(message);
-
-    if (success) message.channel.send('sıradaki müziğe geçtim 😎');
+    return inter.reply({
+      content: success ? `şu anki müzik ${queue.current.title} geçildi` : 'bi\'şeyler ters gitti...'
+    });
   },
 };

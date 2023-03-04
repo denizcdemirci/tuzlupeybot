@@ -1,21 +1,23 @@
+const fetch = require('node-fetch');
+
 module.exports = {
   name: 'maymun',
-  aliases: ['meymun'],
-  category: 'General',
-  utilisation: '{prefix}maymun',
-  execute(client, message) {
-    const fetch = require('node-fetch');
+  description: 'Maymun gifleri gönderir',
+  async execute({ client, inter }) {
+    if (inter.channel.id === client.config.app.monkeyChannel) {
+      try {
+        const response = await fetch(`https://api.giphy.com/v1/gifs/random?api_key=${process.env.GIPHY_TOKEN}&tag=monkey`);
 
-    if (message.channel.id === client.config.discord.monkeyChannel) {
-      fetch(`https://api.giphy.com/v1/gifs/random?api_key=${process.env.GIPHY_TOKEN}&tag=monkey`).then((data) => {
-        return data.json();
-      }).then(async (response) => {
-        const monkeys = ['🐒', '🐵', '🙈', '🙉', '🙊', '🍌'];
-        await message.react(monkeys[Math.floor(Math.random() * monkeys.length)]);
-        message.channel.send(response.data.images.original.url);
-      });
+        const { data } = await response.json();
+
+        inter.reply({
+          content: data.images.original.url
+        });
+      } catch (error) {
+        inter.reply(error);
+      }
     } else {
-      message.reply(`maymun paylaşımlarını <#${client.config.discord.monkeyChannel}> kanalında yapabilirsin ❤️`);
+      inter.reply(`maymun paylaşımlarını <#${client.config.app.monkeyChannel}> kanalında yapabilirsin ❤️`);
     }
   },
 };

@@ -1,84 +1,68 @@
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
+
 module.exports = {
   name: 'nowplaying',
-  aliases: ['np'],
-  category: 'Music',
-  utilisation: '{prefix}nowplaying',
-  execute(client, message) {
-    if (!message.member.voice.channel) return message.reply('ses kanalında değilsin ki. nasıl müzik açmamı bekliyorsun? ☺️');
+  description: 'Şu an ne çalıyor?',
+  voiceChannel: true,
+  execute({ inter }) {
+    const queue = player.getQueue(inter.guildId);
 
-    if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.reply(`şu anda \`${message.member.voice.channel.name}\` kanalında müzik çalıyor. önce o kanala gitmelisin 😉`);
+    if (!queue || !queue.playing) return inter.reply({
+      content: 'şu anda herhangi bir müzik çalmıyor 😡',
+      ephemeral: true
+    });
 
-    if (!client.player.getQueue(message)) return message.reply('şu anda herhangi bir müzik çalmıyor 😋');
+    const track = queue.current;
 
-    const track = client.player.nowPlaying(message);
-    const filters = [];
+    const methods = ['disabled', 'track', 'queue'];
 
-    Object.keys(client.player.getQueue(message).filters).forEach((filterName) => client.player.getQueue(message).filters[filterName]) ? filters.push(filterName) : false;
+    const timestamp = queue.getPlayerTimestamp();
 
-    message.channel.send({
-      embed: {
-        color: 'RED',
-        author: {
-          name: track.title
-        },
-        fields: [
-          {
-            name: 'Kanal',
-            value: track.author,
-            inline: true
-          },
-          {
-            name: 'Çalınmasını isteyen',
-            value: track.requestedBy.username,
-            inline: true
-          },
-          {
-            name: 'Oynatma listesinden',
-            value: track.fromPlaylist ? 'Evet' : 'Hayır',
-            inline: true
-          },
-          {
-            name: 'Görüntüleme',
-            value: track.views,
-            inline: true
-          },
-          {
-            name: 'Süre',
-            value: track.duration,
-            inline: true
-          },
-          {
-            name: 'Aktif filtreler',
-            value: filters.length + '/' + client.config.filters.length,
-            inline: true
-          },
-          {
-            name: 'Ses seviyesi',
-            value: client.player.getQueue(message).volume,
-            inline: true
-          },
-          {
-            name: 'Tekrar modu',
-            value: client.player.getQueue(message).repeatMode ? 'Aktif' : 'Devre dışı',
-            inline: true
-          },
-          {
-            name: 'Durduruldu',
-            value: client.player.getQueue(message).paused ? 'Evet' : 'Hayır',
-            inline: true
-          },
-          {
-            name: 'İlerleme çubuğu',
-            value: client.player.createProgressBar(message, {
-              timecodes: true
-            }),
-            inline: true
-          }
-        ],
-        thumbnail: {
-          url: track.thumbnail
-        },
-      },
+    const trackDuration = timestamp.progress === 'Infinity' ? 'sonsuz (canlı)' : track.duration;
+
+    const progress = queue.createProgressBar();
+
+    const embed = new EmbedBuilder()
+      .setAuthor({
+        name: track.title,
+        iconURL: client.user.displayAvatarURL({size: 1024, dynamic: true})
+      })
+      .setThumbnail(track.thumbnail)
+      .setDescription(`Ses seviyesi **${queue.volume}**%\nSüre **${trackDuration}**\nİlerleme ${progress}\nTekrar modu **${methods[queue.repeatMode]}**\n${track.requestedBy} tarafından talep edildi`)
+
+    const volumeup = new ButtonBuilder()
+      .setLabel('Sesi arttır')
+      .setCustomId(JSON.stringify({
+        ffb: 'volumeup'
+      }))
+      .setStyle('Primary');
+
+    const volumedown = new ButtonBuilder()
+      .setLabel('Sesi azalt')
+      .setCustomId(JSON.stringify({
+        ffb: 'volumedown'
+      }))
+      .setStyle('Primary');
+
+    const loop = new ButtonBuilder()
+      .setLabel('Tekrarla')
+      .setCustomId(JSON.stringify({
+        ffb: 'loop'
+      }))
+      .setStyle('Danger');
+
+    const resumepause = new ButtonBuilder()
+      .setLabel('Çal & Durdur')
+      .setCustomId(JSON.stringify({
+        ffb: 'resume&pause'
+      }))
+      .setStyle('Success');
+
+    const row = new ActionRowBuilder().addComponents(volumedown, resumepause, loop, volumeup);
+
+    inter.reply({
+      embeds: [embed],
+      components: [row]
     });
   },
 };

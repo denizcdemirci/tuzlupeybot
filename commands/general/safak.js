@@ -1,11 +1,11 @@
+const calculateTime = require('../../src/utils/calculateTime');
+
 module.exports = {
   name: 'şafak',
-  aliases: [],
-  category: 'General',
-  utilisation: '{prefix}şafak',
-  execute(client, message) {
-    const calculateTime = require('../../utils/calculateTime');
+  description: 'Şafak attı mı?',
+  execute({ inter }) {
     const { diff, days } = calculateTime('2021-09-16');
+
     const maniler = [
       'Bergamanın bol taşı\nNe yapalım binbaşı\nYârim askere gitti\nDinmez gözümün yaşı',
       'Asker ettiler beni\nBilecik alayına\nAlır kaçırırım seni\nGelirse kolayıma',
@@ -16,14 +16,11 @@ module.exports = {
     ];
 
     if (diff > 86400) {
-      message.channel.send(`${maniler[Math.floor((Math.random() * maniler.length))]}\n\nşafak atarsa ${days}`);
-      message.react('🪖');
+      inter.reply(`${maniler[Math.floor((Math.random() * maniler.length))]}\n\nşafak atarsa ${days}`);
     } else if (diff <= 86400 && diff > 0) {
-      message.channel.send('şafak doğan güneş');
-      message.react('🌞');
+      inter.reply('şafak doğan güneş');
     } else if (diff <= 0) {
-      message.channel.send('şafak attı');
-      message.react('🎖️');
+      inter.reply('şafak attı');
     }
   },
 };

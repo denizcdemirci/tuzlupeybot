@@ -1,19 +1,40 @@
+const { EmbedBuilder } = require('discord.js');
+
 module.exports = {
   name: 'queue',
-  aliases: [],
-  category: 'Music',
-  utilisation: '{prefix}queue',
-  execute(client, message) {
-    if (!message.member.voice.channel) return message.reply('ses kanalında değilsin ki. nasıl müzik açmamı bekliyorsun? ☺️');
+  description: 'Sıradaki müzikleri al',
+  voiceChannel: true,
+  execute({client, inter}) {
+    const queue = player.getQueue(inter.guildId);
 
-    if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.reply(`şu anda \`${message.member.voice.channel.name}\` kanalında müzik çalıyor. önce o kanala gitmelisin 😉`);
+    if (!queue || !queue.playing) return inter.reply({
+      content: 'şu anda herhangi bir müzik çalmıyor 😡',
+      ephemeral: true
+    });
 
-    const queue = client.player.getQueue(message);
+    if (!queue.tracks[0]) return inter.reply({
+      content: 'bu müzikten sonra oynatma listesinde başka müzik yok 😡',
+      ephemeral: true
+    });
 
-    if (!client.player.getQueue(message)) return message.reply('şu anda herhangi bir müzik çalmıyor 😋');
+    const methods = ['', '🔁', '🔂'];
 
-    message.channel.send(`**Çalma listesi ${client.player.getQueue(message).loopMode ? '(döngüde)' : ''}**\nŞu anda çalan: ${queue.playing.title} | ${queue.playing.author}\n\n` + (queue.tracks.map((track, i) => {
-      return `**#${i + 1}** - ${track.title} | ${track.author} (çalınmasını isteyen: ${track.requestedBy.username})`
-    }).slice(0, 5).join('\n') + `\n\n${queue.tracks.length > 5 ? `ve **${queue.tracks.length - 5}** diğer müzik listede` : `Çalma listesinde toplam **${queue.tracks.length}** müzik var.`}`));
+    const songs = queue.tracks.length;
+
+    const nextSongs = songs > 5 ? `**${songs - 5}** müzik daha ekle...` : `çalma listesinden **${songs}** şarkı...`;
+
+    const tracks = queue.tracks.map((track, i) => `**${i + 1}** - ${track.title} | ${track.author} (requested by : ${track.requestedBy.username})`);
+
+    const embed = new EmbedBuilder()
+      .setThumbnail(inter.guild.iconURL({size: 2048, dynamic: true}))
+      .setAuthor({
+        name: `Sunucu sırası - ${inter.guild.name} ${methods[queue.repeatMode]}`,
+        iconURL: client.user.displayAvatarURL({size: 1024, dynamic: true})
+      })
+      .setDescription(`Şu anda ${queue.current.title}\n\n${tracks.slice(0, 5).join('\n')}\n\n${nextSongs}`);
+
+    inter.reply({
+      embeds: [embed]
+    });
   },
 };

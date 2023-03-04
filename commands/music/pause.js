@@ -1,19 +1,24 @@
 module.exports = {
   name: 'pause',
-  aliases: [],
-  category: 'Music',
-  utilisation: '{prefix}pause',
-  execute(client, message) {
-    if (!message.member.voice.channel) return message.reply('ses kanalında değilsin ki. nasıl müzik açmamı bekliyorsun? ☺️');
+  description: 'Müziği duraklat',
+  voiceChannel: true,
+  execute({ inter }) {
+    const queue = player.getQueue(inter.guildId);
 
-    if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.reply(`şu anda \`${message.member.voice.channel.name}\` kanalında müzik çalıyor. önce o kanala gitmelisin 😉`);    if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.reply(`şu anda ${message.member.voice.channel.name} kanalında müzik çalıyor. önce o kanala gitmelisin 😉`);
+    if (!queue || !queue.playing) return inter.reply({
+      content: 'şu anda herhangi bir müzik çalmıyor 😡',
+      ephemeral: true
+    });
 
-    if (!client.player.getQueue(message)) return message.reply('şu anda herhangi bir müzik çalmıyor 😋');
+    if (queue.connection.paused) return inter.reply({
+      content: 'müzik zaten duraklatılmış 🙄',
+      ephemeral: true
+    })
 
-    if (client.player.getQueue(message).paused) return message.reply('müzik zaten duraklatılmış 🙄');
+    const success = queue.setPaused(true);
 
-    const success = client.player.pause(message);
-
-    if (success) message.channel.send(`\`${client.player.getQueue(message).playing.title}\` duraklatıldı.`);
+    return inter.reply({
+      content: success ? `şu anki müzik ${queue.current.title} duraklantıldı 😋` : 'bi\'şeyler ters gitti...'
+    });
   },
 };

@@ -1,30 +1,74 @@
+const { ApplicationCommandOptionType } = require('discord.js');
+const { QueueRepeatMode } = require('discord-player');
+
 module.exports = {
   name: 'loop',
-  aliases: ['lp', 'repeat'],
-  category: 'Music',
-  utilisation: '{prefix}loop',
-  execute(client, message, args) {
-    if (!message.member.voice.channel) return message.reply('ses kanalında değilsin ki. nasıl müzik açmamı bekliyorsun? ☺️');
+  description: 'Müziğin veya tüm kuyruğun tekrara alınmasını etkinleştirin veya devre dışı bırakın',
+  voiceChannel: true,
+  options: [
+    {
+      name: 'action',
+      description: 'Tekrarda gerçekleştirmek istediğin eylem',
+      type: ApplicationCommandOptionType.String,
+      required: true,
+      choices: [
+        {
+          name: 'Etkinleştir',
+          value: 'enable_loop_queue'
+        },
+        {
+          name: 'Devredışı',
+          value: 'disable_loop'
+        },
+        {
+          name: 'Müzik',
+          value: 'enable_loop_song'
+        },
+      ],
+    }
+  ],
+  execute({ inter }) {
+    const queue = player.getQueue(inter.guildId);
 
-    if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.reply(`şu anda \`${message.member.voice.channel.name}\` kanalında müzik çalıyor. önce o kanala gitmelisin 😉`);
+    if (!queue || !queue.playing) return inter.reply({
+      content: 'şu anda herhangi bir müzik çalmıyor 😡',
+      ephemeral: true
+    });
 
-    if (!client.player.getQueue(message)) return message.reply('şu anda herhangi bir müzik çalmıyor 😋');
+    switch (inter.options._hoistedOptions.map(x => x.value).toString()) {
+      case 'enable_loop_queue': {
+        if (queue.repeatMode === 1) return inter.reply({
+          content: 'önce tekrar modunda mevcut müziği devre dışı bırakmalısın (/loop Devredışı)',
+          ephemeral: true
+        });
 
-    if (args.join(' ').toLowerCase() === 'queue') {
-      if (client.player.getQueue(message).loopMode) {
-        client.player.setLoopMode(message, false);
-        return message.channel.send('tekrarlama modu devre dışı bırakldı 😮');
-      } else {
-        client.player.setLoopMode(message, true);
-        return message.channel.send('🔁 tekrarlama modu etkinleştirildi. tüm sıra durmadan tekrarlanacak');
+        const success = queue.setRepeatMode(QueueRepeatMode.QUEUE);
+
+        return inter.reply({
+          content: success ? 'tekrar modu **etkin** tüm sıra sonsuza kadar tekrarlanacak 🤯' : 'bi\'şeyler ters gitti...'
+        });
+        break
       }
-    } else {
-      if (client.player.getQueue(message).repeatMode) {
-        client.player.setRepeatMode(message, false);
-        return message.channel.send('tekrarlama modu devre dışı bırakldı 😮');
-      } else {
-        client.player.setRepeatMode(message, true);
-        return message.channel.send('🔁 tekrarlama modu etkinleştirildi. tüm sıra durmadan tekrarlanacak');
+      case 'disable_loop': {
+        const success = queue.setRepeatMode(QueueRepeatMode.OFF);
+
+        return inter.reply({
+          content: success ? `tekrar modu **devre dışı**` : 'bi\'şeyler ters gitti...'
+        });
+        break
+      }
+      case 'enable_loop_song': {
+        if (queue.repeatMode === 2) return inter.reply({
+          content: 'önce tekrar modunda mevcut müziği devre dışı bırakmalısın (/loop Devredışı)',
+          ephemeral: true
+        });
+
+        const success = queue.setRepeatMode(QueueRepeatMode.TRACK);
+
+        return inter.reply({
+          content: success ? `tekrar modu **etkin** tüm sıra sonsuza kadar tekrarlanacak 🤯 (/loop Devredışı ile döngüyü sonlandırabilirsin)` : 'bi\'şeyler ters gitti...'
+        });
+        break
       }
     }
   },

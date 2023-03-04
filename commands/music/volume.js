@@ -1,21 +1,38 @@
+const { ApplicationCommandOptionType } = require('discord.js');
+
 module.exports = {
   name: 'volume',
-  aliases: [],
-  category: 'Music',
-  utilisation: '{prefix}volume [1-100]',
-  execute(client, message, args) {
-    if (!message.member.voice.channel) return message.reply('ses kanalında değilsin ki. nasıl müzik açmamı bekliyorsun? ☺️');
+  description: 'Ses seviyesini ayarlar',
+  voiceChannel: true,
+  options: [
+    {
+      name: 'volume',
+      description: 'Ses seviyesi',
+      type: ApplicationCommandOptionType.Number,
+      required: true,
+      minValue: 1,
+      maxValue: client.config.opt.maxVol
+    }
+  ],
+  execute({ inter }) {
+    const queue = player.getQueue(inter.guildId);
 
-    if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.reply(`şu anda \`${message.member.voice.channel.name}\` kanalında müzik çalıyor. önce o kanala gitmelisin 😉`);
+    if (!queue || !queue.playing) return inter.reply({
+      content: 'şu anda herhangi bir müzik çalmıyor 😡',
+      ephemeral: true
+    });
 
-    if (!client.player.getQueue(message)) return message.reply('şu anda herhangi bir müzik çalmıyor 😋');
+    const vol = inter.options.getNumber('volume');
 
-    if (!args[0] || isNaN(args[0]) || args[0] === 'Infinity') return message.channel.send('geçerli bir sayı gir amk 😡');
+    if (queue.volume === vol) return inter.reply({
+      content: `değiştirmek istedği ses seviyesi şu anda ses seviyesiyle aynı 😐`,
+      ephemeral: true
+    });
 
-    if (Math.round(parseInt(args[0])) < 1 || Math.round(parseInt(args[0])) > 100) return message.channel.send('lütfen 1 ile 100 arasında bir sayı gir 🤗');
+    const success = queue.setVolume(vol);
 
-    const success = client.player.setVolume(message, parseInt(args[0]));
-
-    if (success) message.channel.send(`🔉 ses seviyesi **%${parseInt(args[0])}** olarak ayarlandı`);
+    return inter.reply({
+      content: success ? `ses seviyesi **${vol}**/**${client.config.opt.maxVol}**% olarak değiştirildi 🔊` : 'bi\'şeyler ters gitti...'
+    });
   },
 };
