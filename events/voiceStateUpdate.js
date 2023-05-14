@@ -6,6 +6,7 @@ module.exports = (client, oldState, newState) => {
     '152775281055236097',
     '789546252101484544',
     '818258673171824640',
+    '1101454484217004123',
   ];
 
   if (!newState.channel) return;
