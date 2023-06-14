@@ -20,7 +20,7 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setAuthor({
         name: 'Tuzlu MC',
-        iconURL: 'https://www.minecraft.net/etc.clientlibs/minecraft/clientlibs/main/resources/apple-icon-114x114.png',
+        iconURL: 'https://i.imgur.com/TurQKmV.png',
       })
       .addFields(
         {
@@ -28,13 +28,13 @@ module.exports = {
           value: '> `mc.tuzlu.games`',
         },
         {
-          name: 'Sürüm',
-          value: server.software.version.split(' ')[0],
+          name: 'Sunucu Durumu',
+          value: serverStatus,
           inline: true
         },
         {
-          name: 'Sunucu Durumu',
-          value: serverStatus,
+          name: 'Sürüm',
+          value: server.software.version.split(' ')[0],
           inline: true
         },
         {
