@@ -12,17 +12,25 @@ module.exports = {
     if (server.hasStatus(server.STATUS.ONLINE)) {
       serverStatus = '🟢 Online';
     } else if (server.hasStatus([server.STATUS.PREPARING, server.STATUS.LOADING, server.STATUS.STARTING])) {
-      serverStatus = '🟡 Hazırlanıyor';
+      serverStatus = '🟡 Başlatılıyor';
     } else {
       serverStatus = '🔴 Offline';
     }
 
     const embed = new EmbedBuilder()
-      .setTitle('Tuzlu MC')
+      .setAuthor({
+        name: 'Tuzlu MC',
+        iconURL: 'https://www.minecraft.net/etc.clientlibs/minecraft/clientlibs/main/resources/apple-icon-114x114.png',
+      })
       .addFields(
         {
           name: 'Adres',
-          value: '`mc.tuzlu.games`',
+          value: '> `mc.tuzlu.games`',
+        },
+        {
+          name: 'Sürüm',
+          value: server.software.version.split(' ')[0],
+          inline: true
         },
         {
           name: 'Sunucu Durumu',
@@ -30,17 +38,7 @@ module.exports = {
           inline: true
         },
         {
-          name: 'Sürüm',
-          value: server.software.version,
-          inline: true
-        },
-        {
-          name: 'Kişi Sayısı',
-          value: `${server.players.count}/${server.players.max}`,
-          inline: true
-        },
-        {
-          name: 'Çevrimiçi Oyuncular',
+          name: `Çevrimiçi Oyuncular (${server.players.count}/${server.players.max})`,
           value: `${server.players.list.length > 0 ? server.players.list.join(', ') : '😔 Kimse yok'}`,
         },
       )
