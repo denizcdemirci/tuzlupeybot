@@ -1,5 +1,6 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const { Player } = require('discord-player');
+const { Client: ExarotonClient } = require('exaroton');
 
 global.client = new Client({
   intents: [
@@ -15,6 +16,8 @@ global.client = new Client({
 client.config = require('./config');
 
 global.player = new Player(client, client.config.opt.discordPlayer);
+
+global.exarotonClient = new ExarotonClient(process.env.EXAROTON_TOKEN);
 
 require('./src/loader');
 require('./src/events');

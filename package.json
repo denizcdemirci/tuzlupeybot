@@ -8,6 +8,7 @@
     "@discordjs/voice": "^0.14.0",
     "discord-player": "^5.3.1",
     "discord.js": "^14.1.2",
+    "exaroton": "^1.10.0",
     "ffmpeg-static": "^5.0.2",
     "moment-timezone": "^0.5.41",
     "ms": "^3.0.0-canary.1",
