@@ -4,7 +4,7 @@ module.exports = {
   name: 'şafak',
   description: 'Şafak attı mı?',
   execute({ inter }) {
-    const { diff, days } = calculateTime('2021-09-16');
+    const { diff, days } = calculateTime('2024-04-06');
 
     const maniler = [
       'Bergamanın bol taşı\nNe yapalım binbaşı\nYârim askere gitti\nDinmez gözümün yaşı',
